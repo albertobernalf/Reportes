@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <meta name="description" content="Historia Clinica Autenticacion"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- nuevos -->
+
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="manejocamas">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Manejo Camas">
+    <!-- Fin nuevos -->
+
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Pagina Table</title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="{% static '/main.js' %}"></script>
+
+<script>
+    function Agrabar()
+{
+
+	var envios = new FormData();
+
+
+	var usuario = document.getElementById("usuario").value;
+	var contrasena = document.getElementById("contrasena").value;
+
+
+
+<!--
+window.location.pathname,
+-->
+
+	$.ajax({
+		type: 'POST',
+    	url: '/grabar/usuario,contrasena',
+		data: {'usuario':usuario,'contrasena':contrasena},
+		success: function (respuesta) {
+
+
+              $('#mensaje1').val(respuesta);
+            alert("pausa");
+			$('#exampleModal').modal().hide();
+			 window.location.reload();
+             $('#mensaje').val(respuesta);
+
+                    },
+	   		    error: function (request, status, error) {
+	   	    	}
+	});
+};
+
+</script>
+
+
+</head>
+
+<body>
+<br>
+<div class="row">
+
+
+    <div class="col-xl-1"></div>
+
+    <div class="col-xl-2" style="background-color: lavender;">
+
+        <figure class="figure">
+            <img src="{% static '/IMAGES/logo.jpg' %}" class="figure-img img-fluid rounded"
+                 alt="...">
+            <figcaption class="figure-caption text-right">FUNDACION
+                HOSPITAL SAN CARLOS
+            </figcaption>
+        </figure>
+
+    </div>
+
+    <div class="col-xl-1"></div>
+
+
+    <div class="col-xl-6" style="background-color: lavenderblush;">
+        <div class="mx-auto" style="width: 1600px;">
+
+
+            <p class="text-left">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mision:</p>
+
+
+            Brindar una experiencia humanizada e integral en servicio de salud,
+            a nuestros pacientes <br/> y sus familias, con altos estandares de
+            calidad mediante el mejor talento humano <br/> generando impacto
+            social y ambiental ... <br/> <br/>
+
+
+            <p class="text-left">
+
+                <bold>
+
+                    <bold>
+            </p>
+
+
+        </div>
+    </div>
+
+    <div class="col-xl-1"></div>
+
+
+    <div class="col-xl-2" style="background-color: lavender;"></div>
+
+</div>
+
+<div class="row">
+    <div class="container">
+        <div class="card">
+
+
+            <div class="card-block" align="center">
+                          <br>
+
+
+            <table>
+                <center>
+                    <tr>
+                        <td>
+                            <font size="10"> Historia Clinica Autenticacion </font>
+                   <a href="/graba/usuario,contrasena" role="button"  class="btn btn-primary eBtn" data-toggle="modal" onclick='$("#exampleModal").modal("show")' >
+						       <img src="{% static '/IMAGES/persona1.jpg' %}" class="figure-img img-fluid rounded"  width="50" height="60" alt="..." onclick='$("#exampleModal").modal("show")'>
+
+						</a>      </td>
+                    </tr>
+                </center>
+
+            </table>
+            <br>
+
+                <div class="myForm">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Actualiza
+                                        Contrasena</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="form-group">
+                                        <label for="usuario" class="col-form-label">Usuario:</label>
+                                        <input type="text" class="form-control" id="usuario" name="usuario" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contrasena" class="col-form-label">Contrasena:</label>
+                                        <input type="password" class="form-control" id="contrasena" name="contrasena" value="">
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close
+                                    </button>
+                                       <div id="mensaje1" name="mensaje1" class="col-xl-2" style="background-color: lavender;"> </div>
+                                    <input type="button" class="btn btn-primary" value="save" onclick="Agrabar()">
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- ojo -->
+
+
+                <form method="post">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" value=""/>
+                    <label for="contrasena">Contrasena:</label>
+                    <input type="password" id="contrasena" name="contrasena" value=""/>
+                    <label for="seleccion">Contrato:</label>
+
+
+                    <select id="seleccion" name="seleccion">
+                        {% for contra in ContratosHC %}
+                        <option value="{{contra.mpmeni}}"> {{contra.menomb}}</option>
+                        {% endfor %}
+                    </select>
+
+
+                    <input type="submit" value="Enviar"/>
+                    <div id="mensaje" name="mensaje" class="col-xl-2" style="background-color: lavender;"> {{Mensaje}}</div>
+
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
