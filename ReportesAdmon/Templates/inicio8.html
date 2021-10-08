@@ -1,0 +1,260 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="manejocamas">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Contratos Usuario">
+    <!-- Fin nuevos -->
+
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Contratos Usuario</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="{% static '/main.js' %}"></script>
+
+    <script>
+  function grabaContrato()
+  {
+
+
+  var usuario = document.getElementById("usuario").value;
+  var cod_contrato = document.getElementById("seleccion1").value;
+
+   $.ajax({
+		type: 'POST',
+    	url: '/grabarContrato/usuario,cod_contrato/',
+		data: {'usuario':usuario,'cod_contrato':cod_contrato},
+		success: function (respuesta) {
+              $('#mensaje1').val(respuesta);
+
+			$('#ModalContratos').modal().hide();
+			 window.location.reload();
+
+                    },
+	   		    error: function (request, status, error) {
+	   	    	}
+	});
+
+
+
+  }
+  function valida()
+  {
+
+  }
+
+
+
+
+
+    </script>
+</head>
+<body>
+<br>
+<div class="row">
+    <div class="col-xl-1">
+    </div>
+    <div class="col-xl-2" style="background-color: lavender;">
+        <figure class="figure">
+            <img src="{% static '/IMAGES/logo.jpg' %}" class="figure-img img-fluid rounded"
+                 alt="...">
+            <figcaption class="figure-caption text-right">FUNDACION
+                HOSPITAL SAN CARLOS
+            </figcaption>
+        </figure>
+
+
+    </div>
+
+    <div class="col-xl-1">
+
+    </div>
+    <div class="col-xl-6" style="background-color: lavenderblush;">
+        <div class="mx-auto" style="width: 1600px;">
+            <p class="text-left">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mision:
+            </p>
+            Brindar una experiencia humanizada e integral en servicio de salud,
+            a nuestros pacientes <br/> y sus familias, con altos estandares de
+            calidad mediante el mejor talento humano <br/> generando impacto
+            social y ambiental ... <br/> <br/>
+
+            <p class="text-left">
+
+                <bold>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C O N T R A T O S &nbsp&nbsp U S U A R I O S
+                    &nbsp&nbsp H I S T O R I A &nbsp&nbsp C L I N I C A
+                    <bold>
+            </p>
+        </div>
+    </div>
+    <div class="col-xl-1">
+
+    </div>
+    <div class="col-xl-2" style="background-color: lavender;">
+
+    </div>
+
+
+    <div class="col-xl-1">
+
+    </div>
+    <br/>
+    <br/>
+</div>
+<div class="container">
+    <div class="card">
+        <div class="myForm">
+            <form id="ModalCaptura" method="POST" onsubmit="return valida(this)">
+                <div class="modal fade" taindex="-1" id="ModalContratos" role="dialog"
+                     aria-labelledby="ModalContratosLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ModalContratosLabel">Actualiza
+                                    Contratos Usuario</h5>
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="usuario" class="col-form-label">Usuario:</label>
+                                    <input type="text" class="form-control" id="usuario" name="usuario"
+                                           value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="seleccion1" class="col-form-label">Seleccione Contrato:</label>
+                                    <select id="seleccion1" name="seleccion1">
+
+                                    {% for contratosHc in ContratosHc %}
+                                    <option value="{{contratosHc.mpmeni}}"> {{contratosHc.menomb}}</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Close
+                                </button>
+                                <input type="button" class="btn btn-primary" value="save" onclick="grabaContrato()">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+    <div class="card-block">
+
+
+        <form method="post">
+            <center>
+                <div class="form-group">
+                    <label for="usuario" class="col-form-label">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" value=""/>
+                    <input type="submit" class="btn btn-primary" value="buscar"/>
+
+                    <select id="seleccion" name="seleccion">
+                        {% for contratosHc in ContratosHc %}
+                        <option value="{{contratosHc.mpmeni}}"> {{contratosHc.menomb}}</option>
+                        {% endfor %}
+                    </select>
+
+
+                </div>
+            </center>
+
+
+        </form>
+    </div>
+
+    <div class="card-block">
+        <div style="height: 400px; overflow: auto">
+        <table class="table table-hover"  style="height: 400px">
+            <tr>
+                <th>Usuario</th>
+                <th>Nombre</th>
+                <th>Cod.Contrato</th>
+                <th>Contrato</th>
+                <th>Borrado</th>
+            </tr>
+            <tbody>
+            {% for usuariosHc in UsuariosHc %}
+            <tr>
+                <td>{{ usuariosHc.usuario }}</td>
+                <td>{{ usuariosHc.nombre }}</td>
+                <td>{{ usuariosHc.cod_contrato }}</td>
+                <td>{{ usuariosHc.contrato }}</td>
+                <td><a href="/eliminarContrato/{{usuariosHc.usuario}}, {{usuariosHc.cod_contrato}} " role="button"
+                       class="btn btn-primary eBtn1">
+                    Eliminar
+                </a>
+                </td>
+            </tr>
+            {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+            </div>
+        <br>
+        <br>
+    </div>
+
+    <div align="center">
+        <td><a href="/grabarContrato/" class="btn btn-primary eBtn3" data-toggle="modal"
+               onclick='$("#ModalContratos").modal("show")'>
+
+        </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ADICIONAR
+        </td>
+    </div>
+
+</div>
+</body>
+</html>
