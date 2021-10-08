@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Pagina Table</title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="{% static '/main.js' %}"></script>
+
+    <script>
+$(document).ready(function()
+		{
+		var envio = new FormData();
+
+
+	console.log("Entre AlBERTO BERNAL F Cargue la Forma Modal X");
+
+	  $('.table .eBtn').on('click',function(event)
+	        {
+			event.preventDefault();
+			var href = $(this).attr('href');
+
+			$.get(href, function(vistaCex,status)
+			 {
+
+                $('#cita').val(vistaCex.cita1);
+				$('#fecha').val(vistaCex.fecha);
+				$('#hora').val(vistaCex.hora);
+				$('#consultorio').val(vistaCex.consultorio);
+				$('#especialidad').val(vistaCex.especialidad);
+				$('#medico').val(vistaCex.medico);
+				$('#paciente').val(vistaCex.paciente);
+				$('.myForm #estado_Cita').val(vistaCex.estado_cita);
+
+
+
+				if (vistaCex.llamada == true)
+	           		{
+
+					$('#llamada').prop('checked',true);
+						}
+				else
+					{
+
+					$('#llamada').prop('checked',false);
+					}
+
+
+
+
+				if (vistaCex.atendido == true)
+
+				{
+
+				$('#atendido').prop('checked',true);
+					}
+			else
+				{
+
+				$('#atendido').prop('checked',false);
+				}
+
+
+					}
+
+			);
+
+
+			//	$('#exampleModal').modal("show");
+				 $('#exampleModal').modal({show:true});
+
+			  });
+
+		})
+
+
+    </script>
+
+</head>
+
+<body>
+<br/>
+
+
+<div class="row">
+
+
+    <div class="col-xl-1"></div>
+
+    <div class="col-xl-2" style="background-color: lavender;">
+
+        <figure class="figure">
+            <img src="{% static '/IMAGES/logo.jpg' %}" class="figure-img img-fluid rounded"
+                 alt="...">
+            <figcaption class="figure-caption text-right">FUNDACION
+                HOSPITAL SAN CARLOS
+            </figcaption>
+        </figure>
+
+    </div>
+
+    <div class="col-xl-1"></div>
+
+
+    <div class="col-xl-6" style="background-color: lavenderblush;">
+        <div class="mx-auto" style="width: 1600px;">
+
+
+            <p class="text-left">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mision:</p>
+
+
+            Brindar una experiencia humanizada e integral en servicio de salud,
+            a nuestros pacientes <br/> y sus familias, con altos estandares de
+            calidad mediante el mejor talento humano <br/> generando impacto
+            social y ambiental ... <br/> <br/>
+
+
+            <p class="text-left">
+
+                <bold>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C O N S U L
+                    T A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E X T E
+                    R N A
+                    <bold>
+            </p>
+
+
+        </div>
+    </div>
+
+    <div class="col-xl-1"></div>
+
+
+    <div class="col-xl-2" style="background-color: lavender;"></div>
+
+</div>
+
+<div class="col-xl-1"></div>
+
+
+<br/>
+<br/>
+
+
+<div class="container">
+    <div class="card">
+
+
+        <div class="card-block" align="center">
+            <br>
+
+
+            <form name='consultorio' method='POST'>
+                <table>
+                  <center>
+                    <tr>
+                        <td><font size="10"> Seleccione el Consultorio : </font></td>
+
+                    </tr>
+
+                    <tr>
+                        <td>
+
+                            <select id="seleccion" name="seleccion">
+                                {% for cons in Consul %}
+                                <option value="{{cons.CONSCOD}}"> {{cons.CONSDET}}</option>
+                                {% endfor %}
+                            </select>
+
+
+                        </td>
+                    </tr>
+
+               <!--     <div align="center">  -->
+
+                        <tr>
+
+                                <td><input type="submit" id="btnEnviaConsultorio" name="btnEnviaConsultorio"
+                                           value="Consultar"/></td>
+
+
+                        </tr>
+                <!--    </div>  -->
+                   </center>
+                </table>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

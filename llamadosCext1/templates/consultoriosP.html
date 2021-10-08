@@ -1,0 +1,381 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Pagina Table</title>
+
+<!--
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/css/jquery.dataTables.min.css" />
+
+<script type="text/javascript" src="/main.js"></script>
+-->
+
+<!--
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<!--
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<script type="text/javascript" src="{% static '/js/jquery.dataTables.min.js' %}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+-->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{% static '/main.js' %}"></script>
+
+
+
+<script>
+function Agrabar()
+{
+
+	var envios = new FormData();
+	var llamada=0;
+	var atendido=0;
+
+	    if($('input:checkbox[name=llamada]').prop("checked") == true)
+	    {
+                console.log("Checkbox llamada seleccionado.");
+                llamada=1;
+            }
+            else
+            {console.log("Checkbox llamada  NO seleccionado.");
+                llamada=0;
+            }
+
+               if($('input:checkbox[name=atendido]').prop("checked") == true)
+               {
+                console.log("Checkbox atendido seleccionado.");
+                atendido=1;
+            }
+            else
+            {console.log("Checkbox atendido  NO seleccionado.");
+                    atendido=0;
+            }
+
+	var cita = document.getElementById("cita").value;
+
+        	envios.append('cita',cita);
+ 		envios.append('llamada',llamada);
+  		envios.append('atendido',atendido);
+
+
+
+		  for (var valores in envios.values) {
+			alert("entre al for");
+
+                	     console.log(valores);
+                	     alert(valores);
+
+		             }
+
+
+<!--
+window.location.pathname,
+-->
+	$.ajax({
+		type: 'POST',
+		url: '/save/',
+		data: {'cita':cita,'llamada':llamada,'atendido':atendido},
+		success: function (respuesta) {
+			alert("de vuelta");
+			$('#exampleModal').modal().hide();
+			window.location.reload(); 
+                    },
+	   		    error: function (request, status, error) {
+	   	    	}
+	});
+};
+
+function valida(forma)
+{
+
+	if (x == false)
+	 {
+		 document.getElementById("llamada").checked = false;
+	 }
+		
+	if (y == false)
+	 {
+		document.getElementById("atendido").checked = false;
+	 }
+
+	};
+
+</script>
+</head>
+
+<body>
+	<br />
+
+
+	<div class="row">
+
+
+		<div class="col-xl-1"></div>
+
+		<div class="col-xl-2" style="background-color: lavender;">
+
+			<figure class="figure">
+				<img src="{% static '/IMAGES/logo.jpg' %}" class="figure-img img-fluid rounded"
+					alt="...">
+				<figcaption class="figure-caption text-right">FUNDACION
+					HOSPITAL SAN CARLOS</figcaption>
+			</figure>
+
+		</div>
+
+		<div class="col-xl-1"></div>
+
+
+		<div class="col-xl-6" style="background-color: lavenderblush;">
+			<div class="mx-auto" style="width: 1600px;">
+
+
+
+
+				<p class="text-left">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mision:</p>
+
+
+				Brindar una experiencia humanizada e integral en servicio de salud,
+				a nuestros pacientes <br /> y sus familias, con altos estandares de
+				calidad mediante el mejor talento humano <br /> generando impacto
+				social y ambiental ... <br /> <br />
+
+
+				<p class="text-left">
+
+					<bold>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C O N S U L
+					T A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp E X T E
+					R N A &nbsp&nbsp   <bold>
+				</p>
+
+
+
+
+
+			</div>
+		</div>
+
+		<div class="col-xl-1"></div>
+
+
+		<div class="col-xl-2" style="background-color: lavender;"></div>
+
+	</div>
+
+	<div class="col-xl-1"></div>
+
+
+
+	<br />
+	<br />
+
+	<div class="container">
+		<div class="card">
+
+
+			<div class="myForm">
+
+				<form id="ModalCaptura" method="POST" onsubmit="return valida(this)">
+
+					<div class="modal fade" id="exampleModal" tabindex="-1"
+						role="dialog" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Actualiza
+										llamada</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+
+									<div class="form-group">
+										<label for="cita" class="col-form-label">Cita:</label>
+										 <input type="text" class="form-control" id="cita" name="cita" readonly 
+											value="">
+									</div>
+									<div class="form-group">
+										<label for="fecha" class="col-form-label">Fecha:</label>
+										<input type="text" class="form-control" id="fecha" name="fecha" readonly
+											value="">
+									</div>
+									<div class="form-group">
+										<label for="hora" class="col-form-label">Hora:</label> <input
+											type="text" class="form-control" id="hora" name="hora" readonly 
+											value="">
+									</div>
+									<div class="form-group">
+										<label for="consultorio" class="col-form-label">Consultorio:</label>
+										<input type="text" class="form-control" id="consultorio"
+											name="consultorio"  readonly  value="">
+									</div>
+														
+												<div class="form-group">
+										<label for="paciente" class="col-form-label">Paciente:</label>
+										<input type="text" class="form-control" id="paciente"
+											name="paciente" readonly   value="">
+									</div>
+
+								
+
+									<div class="form-group">
+										<label for="llamada" class="col-form-label">Llamada:</label> <input
+											type="checkbox" class="checkbox" id="llamada" name="llamada"  name="llamada"
+											>
+									</div>
+
+									<div class="form-group">
+										<label for="atendido" class="col-form-label">Atendido:</label>
+										<input type="checkbox" class="checkbox" id="atendido"
+											name="atendido"  >
+									</div>			
+														
+											<div class="form-group">
+										
+										<input type="text" class="form-control" id="estado_Cita"
+											name="estado_Cita"  style="visibility:hidden;" value="">
+									</div>				
+																	
+										<input type="text" class="form-control" id="especialidad" name="especialidad" style="visibility:hidden;"  value="">
+												
+										 <input type="text" class="form-control" id="medico" name="medico" style="visibility:hidden;" 											value="">
+									
+
+								
+
+
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Close</button>
+									<input type="button" class="btn btn-primary" value="save" onclick="Agrabar()">
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+
+
+		</div>
+
+
+		<div class="card-block">
+
+			<table class="table table-hover">
+
+				<tr>
+				<!--	<th th:text = "#{cita}"></th> -->
+					<th>Cita</th>
+					<th>Fecha</th>
+					<th>Hora</th>
+					<th>Consultorio</th>
+					<th>Especialidad</th>
+					<th>Medico</th>
+				<!--	<th th:text = "#{paciente}"></th> -->
+					<th>Paciente</th>
+					<th>Estado_Cita</th>
+					<th>llamada</th>
+					<th>Editar</th>
+
+
+				</tr>
+
+				<tbody>
+
+				 {% for vistaCex in VistaCex %}
+				 <tr>
+   	 				<td>{{ vistaCex.CITA }}</td>
+ 					<td>{{ vistaCex.FECHA }}</td>
+ 					<td>{{ vistaCex.HORA  }}</td>
+					<td>{{ vistaCex.CONSULTORIO  }}</td>
+  					<td>{{ vistaCex.ESPECIALIDAD  }}</td>
+					<td>{{ vistaCex.MEDICO  }}</td>
+ 					<td>{{ vistaCex.PACIENTE }}</td>
+					<td>{{ vistaCex.ESTADO_CITA }}</td>
+
+ 					{% with var1=vistaCex.LLAMADA  	%}
+						{% ifequal var1 0    %}
+						<td></td>
+       		    		{% endifequal %}
+						{% ifequal var1 1    %}
+						<td> <img src="{% static '/IMAGES/PuntoVerde.jpg' %}" width="42" height="42" style="vertical-align:bottom">
+
+						</td>
+      		     		{% endifequal %}
+					{% endwith %}
+
+					<td>
+						<a href="/findOne/{{vistaCex.CITA}}" role="button"
+						   class="btn btn-primary eBtn" data-toggle="modal" onclick='$("#exampleModal").modal("show")' >
+						Editar
+						</a>
+					 </td>
+
+
+
+				 </tr>
+
+
+				 {% endfor %}
+
+				</tbody>
+
+			</table>
+
+			</hr>
+
+
+
+		</div>
+
+
+	</div>
+
+
+	</div>
+	
+<br>
+<br>
+
+<div align="center">
+	<td><a href="/Ingreso/" 	class="btn btn-secondary"> </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RETORNAR</td>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,160 @@
+	<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Pagina Table</title>
+
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+
+
+<script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="/css/jquery.dataTables.min.css" />
+
+<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/main.js"></script>
+
+</head>
+
+<body>
+	<br />
+
+
+	<div class="row">
+
+
+		<div class="col-xl-1"></div>
+
+		<div class="col-xl-2" style="background-color: lavender;">
+
+			<figure class="figure">
+				<img src="/images/LOGO.JPG" class="figure-img img-fluid rounded"
+					alt="...">
+				<figcaption class="figure-caption text-right">FUNDACION
+					HOSPITAL SAN CARLOS</figcaption>
+			</figure>
+
+		</div>
+
+		<div class="col-xl-1"></div>
+
+
+		<div class="col-xl-4" style="background-color: lavenderblush;">
+			<div class="mx-auto" style="width: 1600px;">
+
+
+
+
+				<p class="text-left">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mision:</p>
+
+
+				Brindar una experiencia humanizada e integral sen servicio de salud,
+				a nuestros pacientes <br /> y sus familias, con altos estandares de
+				calidad mediante el mejor talento humano <br /> generando impacto
+				social y ambiental ... <br /> <br />
+
+
+				<p class="text-left">
+
+					<bold>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C O N S U L
+					T A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E X T E
+					R N A <bold>
+				</p>
+
+
+
+
+
+			</div>
+		</div>
+
+		<div class="col-xl-1"></div>
+
+
+		<div class="col-xl-2" style="background-color: lavender;"></div>
+
+	</div>
+
+	<div class="col-xl-1"></div>
+
+
+
+	<br />
+	<br />
+	
+	
+	<div class="container">
+		<div class="card">
+
+
+			<div class="card-block">
+
+
+
+
+			<table class="table table-hover">
+
+				<tr>
+					<th>Conscod</th>
+					<th>Consdet</th>
+					<th>Adicional</th>
+				
+
+				</tr>
+				<tbody>
+
+					<tr th:each="consul : ${consul.content}">
+
+
+						<td th:text="${consul.conscod}"></td>
+						<td th:text="${consul.consdet}"></td>
+						<td th:text="${consul.adicional}"></td>
+			
+					</tr>
+
+				</tbody>
+
+			</table>
+
+			</hr>
+			
+
+			<ul class="nav nav-pills">
+				<li class="nav-item"
+					th:each="i : ${#numbers.sequence(0,consul.totalPages - 1)}">
+					<a th:href="@{/consul(page1=${i})}" th:text="${i}" class="nav-link"
+					th:classappend="${currentPage}==${i}?'active':''"> </a>
+				</li>
+
+			</ul>
+		</div>
+
+
+	</div>
+
+
+	</div>
+
+	
+
+
+</body>
+</html>
