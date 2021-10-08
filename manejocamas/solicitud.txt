@@ -1,0 +1,6 @@
+Consulta po por pabellon, y estado libre y ocupado y otros
+
+trae:
+
+estado,cama,tipodoc, documento, paciente, ingreso, observaciones, ingreso, dias de estancia
+gravable
