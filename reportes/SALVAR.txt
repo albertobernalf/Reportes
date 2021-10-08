@@ -1,0 +1,114 @@
+ def terapiasCancela(self, doc, y, Story, tipodoc, documento, folio, headline_mayor, headline_mayor1,
+                        headline_mayor2,
+                        headline_mayor3, headline_mayor33, headline_mayor4, subtitle_tipoevol, subtitle_atencion,
+                        subtitle_cabezote, subtitle_nacimiento):
+
+        # Trae Interconsulta
+
+        print("Entre Terapias cancela con folio e y = ", folio, y)
+
+        localTerapiasCan = y
+        print(localTerapiasCan)
+        localTerapiasCan = self.cabezote(doc, localTerapiasCan, Story, tipodoc, documento, folio, headline_mayor,
+                                         headline_mayor1,
+                                         headline_mayor2, headline_mayor3, headline_mayor33, headline_mayor4,
+                                         subtitle_tipoevol, subtitle_atencion, subtitle_cabezote,
+                                         subtitle_nacimiento)
+
+        con18 = pyodbc.connect(
+            'DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+
+        comando = "select  h1.histipdoc,h1.hisckey,h1.hiscsec folio,h1.hisfhorat as fecha,case when h1.hisclpr='2' then 'HOSPITALIZACION' when h1.hisclpr='1' then 'AMBULATORIO' when h1.hisclpr='3' then 'URGENCIAS' end, " \
+                  "h5.hiscpcan cantidad,pro.prnomb as descripcion,  'Cancelado' as Cancelado, case when h51.hcmocntp='1' then 'Admistrativo' when h51.hcmocntp='3' then 'Medico'  end AS MOTIVO_CANCELACION,h51.hcobscan as observaciones,concat(concat(maemed1.mmnomm,'-RM: '), maemed1.mmregm) as usuario_cancela,h51.hcprfhcad as fecha_cancelacion, h5.hiscpobs " \
+                  "from hosvital.hccom1 h1 inner join hosvital.hccom5 h5 on (h5.histipdoc=h1.histipdoc and h5.hisckey=h1.hisckey  and h5.hiscsec=h1.hiscsec and h5.hcprctip= 3 and h5.hcprstgr='C') " \
+                  "inner join hosvital.hccom51 h51 on (h51.histipdoc= h5.histipdoc and h51.hisckey=h5.hisckey and h51.hiscsec=h5.hiscsec and h51.hcprccod= h5.hcprccod) " \
+                  "inner join hosvital.maepro pro on (pro.prcodi=h51.hcprccod) left  join hosvital.maemed1 maemed1 on (maemed1.mmusuario=h51.hcpruscad) " \
+                  "where  h1.histipdoc='" + tipodoc + "' and h1.hisckey = '" + documento + "' and h1.hiscsec = " + str(
+            folio) + " group by h1.histipdoc, h1.hisckey, h1.hiscsec, h1.hisfhorat, h1.hisclpr, h5.hiscpcan, pro.prnomb, 'Cancelado', h51.hcmocntp, h51.hcobscan, concat(concat(maemed1.mmnomm, '-RM: '), maemed1.mmregm), h51.hcprfhcad, h5.hiscpobs"
+
+        cursorTerCan = con18.cursor()
+        cursorTerCan.execute(comando)
+        rowsTerCan = cursorTerCan.fetchall()
+
+        if rowsTerCan == []:
+            return localTerapiasCan
+        else:
+            localTerapiasCan = localTerapiasCan + 1
+
+            recibo = self.cabezote(doc, localTerapiasCan, Story, tipodoc, documento, folio, headline_mayor,
+                                   headline_mayor1, headline_mayor2, headline_mayor3, headline_mayor33,
+                                   headline_mayor4, subtitle_tipoevol, subtitle_atencion, subtitle_cabezote,
+                                   subtitle_nacimiento)
+            localTerapiasCan = recibo
+
+            Story.append(Spacer(1, 2))
+
+            texto1 = 'TERAPIAS'
+            Story.append(Paragraph(texto1, headline_mayor))
+            Story.append(Spacer(1, 1))
+
+            tbl_data = [[Paragraph("Cantidad", subtitle_atencion), Paragraph("Descripcion", subtitle_atencion),
+                         Paragraph("Estado", subtitle_atencion), ]]
+
+            tbl1 = Table(tbl_data, colWidths=[4 * cm, 10 * cm, 5 * cm])
+
+            localTerapiasCan = localTerapiasCan + 3
+            recibo = self.cabezote(doc, localTerapiasCan, Story, tipodoc, documento, folio, headline_mayor,
+                                   headline_mayor1, headline_mayor2, headline_mayor3, headline_mayor33,
+                                   headline_mayor4, subtitle_tipoevol, subtitle_atencion, subtitle_cabezote,
+                                   subtitle_nacimiento)
+            localTerapiasCan = recibo
+
+            Story.append(tbl1)
+            rx = ''
+            rx1 = ''
+            resul = ''
+            resul1 = ''
+            for rowTerCan in rowsTerCan:
+                rx1 = str(rowTerCan.DESCRIPCION)
+                resul1 = str(rowTerCan.RESULTADOS)
+
+                if rx == '' or rx1 != rx:
+                    # Story.append(Paragraph(str(rowTerCan.HISCPOBS), subtitle_atencion))
+                    tbl_data = [
+                        [Paragraph(str(rowTerCan.CANTIDAD), subtitle_atencion),
+                         Paragraph(str(rowTerCan.PRNOMB), subtitle_atencion),
+                         Paragraph(str(rowTerCan.ESTADO), subtitle_atencion),
+                         # Paragraph("", headline_mayor33),
+                         ]]
+                    localTerapiasCan = localTerapiasCan + 1
+                    recibo = self.cabezote(doc, localTerapiasCan, Story, tipodoc, documento, folio, headline_mayor,
+                                           headline_mayor1, headline_mayor2, headline_mayor3, headline_mayor33,
+                                           headline_mayor4, subtitle_tipoevol, subtitle_atencion, subtitle_cabezote,
+                                           subtitle_nacimiento)
+                    localTerapiasCan = recibo
+                    tbl1 = Table(tbl_data, colWidths=[1 * cm, 15 * cm, 3 * cm])
+                    Story.append(tbl1)
+
+                    Story.append(Paragraph("MOTIVO DCANCELACION: " + str(rowTerCan.MOTIVO_CANCELACION), headline_mayor))
+                    Story.append(Paragraph("OBSERVACIONES: ", headline_mayor))
+                    Story.append(Paragraph(str(rowTerCan.OBSERVACIONES), subtitle_atencion))
+                    Story.append(Paragraph("USUARIO QUE CANCELA: " + str(rowTerCan.USUARIO_CANCELA), headline_mayor))
+                    Story.append(Paragraph("FECHA CANCELACION: " + str(rowTerCan.FECHA_CANCELACION), subtitle_atencion))
+
+                    Story.append(Paragraph(str(rowTerCan.DESCRIPCION), subtitle_atencion))
+                    Story.append(Paragraph('Fecha y hora de Aplicacion: ' + str(rowTerCan.FECHA_Y_HORA_APLICACION),
+                                           subtitle_atencion))
+
+                    rx = rx1
+
+        Story.append(Spacer(1, 1))
+        localRegistro = self.registro(doc, localTerapiasCan, Story, tipodoc, documento, folio, headline_mayor,
+                                      headline_mayor1,
+                                      headline_mayor2, headline_mayor3, headline_mayor33, headline_mayor4,
+                                      subtitle_tipoevol, subtitle_atencion, subtitle_cabezote, subtitle_nacimiento)
+        Story.append(Spacer(1, 1))
+
+        localTerapiasCan = localTerapiasCan + 2
+        recibo = self.cabezote(doc, localTerapiasCan, Story, tipodoc, documento, folio, headline_mayor,
+                               headline_mayor1, headline_mayor2, headline_mayor3, headline_mayor33,
+                               headline_mayor4, subtitle_tipoevol, subtitle_atencion, subtitle_cabezote,
+                               subtitle_nacimiento)
+        localTerapiasCan = recibo
+        con18.close()
+        return localTerapiasCan

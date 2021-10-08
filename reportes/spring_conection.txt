@@ -1,0 +1,3 @@
+spring.datasource.url=jdbc:db2://mydb2host:50000/mydb2databasename
+spring.datasource.username=mydb2username
+spring.datasource.password=mydb2password

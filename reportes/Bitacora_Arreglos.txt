@@ -1,0 +1,15 @@
+Mañana :
+
+FASE II
+
+Copia de views.py
+
+No imprimio medico cuando imprimio diagnostico
+verificar conteo de lineas todos los def saltos de paginas
+cambiar probar el tipo de letra de evolucion todas -mas claro , eso es para todas 
+Alinear a mas pocas fuentes
+Verificar el orden de las firmas
+
+FASE III
+
+Usuario prueban ...
