@@ -16,17 +16,18 @@ class ContratosView(TemplateView):
         myConexion = pyodbc.connect('DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
         cur = myConexion.cursor()
         cur.execute("SELECT mpmeni, menomb  FROM hosvital.contratoshc order by menomb")
-        ContratosHc = []
+        contratosHc = []
 
         for mpmeni, menomb in cur.fetchall():
-            ContratosHc.append({'mpmeni': mpmeni, 'menomb': menomb})
+            contratosHc.append({'mpmeni': mpmeni, 'menomb': menomb})
 
         myConexion.close()
-        context['ContratosHc'] = ContratosHc
+        context = {}
+        context['ContratosHc'] = contratosHc
 
-        print(ContratosHc)
+        print(contratosHc)
 
-        miConexion1 = pyodbc.connect('DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+        myConexion1 = pyodbc.connect('DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
         cur1 = myConexion1.cursor()
         comando = "SELECT u.usuario usuario,u.nombre nombre, c.mpmeni cod_contrato, c.menomb contrato FROM hosvital.usuarioscontratoshc r, hosvital.usuarioshc u, hosvital.contratoshc c WHERE r.mpmeni=c.mpmeni and r.usuario = u.usuario order by u.usuario "
         cur1.execute(comando)
@@ -36,15 +37,15 @@ class ContratosView(TemplateView):
         for usuario, nombre, cod_contrato, contrato in cur1.fetchall():
             usuariosHc.append(
                 {'usuario': usuario, 'nombre': nombre, 'cod_contrato': cod_contrato, 'contrato': contrato})
-            print(usuario)
+        print(usuariosHc)
 
         myConexion1.close()
 
-        context = {}
+
 
 
         context['UsuariosHc'] = usuariosHc
-
+        print(usuariosHc)
 
         return context
     
@@ -52,10 +53,11 @@ class ContratosView(TemplateView):
         print("entre post")
         usuario = request.POST.get('usuario')
         print(usuario)
+        print("pase 1")
 
         myConexion2 = pyodbc.connect('DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
         cur2 = myConexion2.cursor()
-        comando = "SELECT u.usuario usuario,u.nombre nombre, c.mpmeni cod_contrato, c.menomb contrato FROM hosvital.ususarioscontratoshc r, hosvitl.usuarioshc u, hosvital.contratoshc c WHERE r.mpmeni=c.mpmeni and r.usuario = u.usuario and u.usuario='" + usuario + "'"
+        comando = "SELECT u.usuario usuario,u.nombre nombre, c.mpmeni cod_contrato, c.menomb contrato FROM hosvital.usuarioscontratoshc r, hosvital.usuarioshc u, hosvital.contratoshc c WHERE r.mpmeni=c.mpmeni and r.usuario = u.usuario and u.usuario='" + usuario + "'"
         cur2.execute(comando)
 
         usuariosHc=[]
@@ -67,7 +69,7 @@ class ContratosView(TemplateView):
         myConexion2.close()
 
         context = {}
-
+        print("pase 2")
         context['UsuariosHc'] = usuariosHc
 
         myConexion3 = pyodbc.connect('DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
@@ -79,6 +81,7 @@ class ContratosView(TemplateView):
             ContratosHc.append({'mpmeni': mpmeni, 'menomb': menomb})
 
         myConexion3.close()
+
         context['ContratosHc'] = ContratosHc
 
 
@@ -101,12 +104,12 @@ def eliminarContrato(request, usuario, cod_contrato):
 
     myConexion5 = pyodbc.connect('DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
     cur5 = myConexion5.cursor()
-    comando = "SELECT u.usuario usuario,u.nombre nombre, c.mpmeni cod_contrato, c.menomb contrato FROM hosvital.ususarioscontratoshc r, hosvital.usuarioshc u, hosvital.contratoshc c WHERE r.mpmeni=c.mpmeni and r.usuario = u.usuario and u.usuario='" + usuario + "'"
+    comando = "SELECT u.usuario usuario,u.nombre nombre, c.mpmeni cod_contrato, c.menomb contrato FROM hosvital.usuarioscontratoshc r, hosvital.usuarioshc u, hosvital.contratoshc c WHERE r.mpmeni=c.mpmeni and r.usuario = u.usuario"
     cur5.execute(comando)
 
     usuariosHc = []
 
-    for usuario, nombre, cod_contrato, contrato in cur4.fetchall():
+    for usuario, nombre, cod_contrato, contrato in cur5.fetchall():
         usuariosHc.append({'usuario': usuario, 'nombre': nombre, 'cod_contrato': cod_contrato, 'contrato': contrato})
         print(usuario)
 
@@ -166,13 +169,13 @@ def grabarContrato(request, usuario, cod_contrato):
     myConexion9 = pyodbc.connect('DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
     cur9 = myConexion9.cursor()
     cur9.execute("SELECT mpmeni, menomb  FROM hosvital.contratoshc order by menomb")
-    ContratosHc = []
+    contratosHc = []
 
     for mpmeni, menomb in cur9.fetchall():
-        ContratosHc.append({'mpmeni': mpmeni, 'menomb': menomb})
+        contratosHc.append({'mpmeni': mpmeni, 'menomb': menomb})
 
     myConexion9.close()
-    context['ContratosHc'] = ContratosHc
+    context['ContratosHc'] = contratosHc
 
     return render(request, "inicio8.html", context)
 

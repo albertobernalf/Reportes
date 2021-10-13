@@ -54,6 +54,8 @@ class AdmUsuariosView(TemplateView):
         cur1 = miConexion1.cursor()
         cur1.execute(comando)
 
+        usuariosHc = []
+
         for usuario, contrasena, nombre in cur1.fetchall():
             usuariosHc.append({'usuario':usuario,'contrasena':contrasena,'nombre':nombre})
 
@@ -96,7 +98,6 @@ def grabar1(request, usuario, contrasena, nombre):
     contrasena1 = request.POST["contrasena"]
     nombre1 = request.POST["nombre"]
     print(usuario1)
-
     print(contrasena1)
     print(nombre1)
 
@@ -123,6 +124,7 @@ def grabar1(request, usuario, contrasena, nombre):
          miConexion3.commit()
          miConexion3.close()
          return HttpResponse("Usuario Ingresado ! ")
+
     else:
         miConexion3 = pyodbc.connect('DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
         cur3 = miConexion3.cursor()
@@ -132,12 +134,12 @@ def grabar1(request, usuario, contrasena, nombre):
         cur3.execute(comando)
         miConexion3.commit()
         miConexion3.close()
+
         return HttpResponse("Usuario Actualizado ! ")
-
-
-
+        print("CHAO")
 
 def borrarUsuario(request, usuario):
+
     print("EntreBorrar Usuario")
     print(usuario)
     miConexion4 = pyodbc.connect('DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
@@ -167,5 +169,6 @@ def borrarUsuario(request, usuario):
     return render(request, "inicio7.html", context)
 
 
+
 def adicionarUsuario(request):
-    print("Entre Aduicicionar")
+    print("Entre Adicicionar")

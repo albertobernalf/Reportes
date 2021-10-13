@@ -108,9 +108,7 @@
 
                 <bold>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C O N T R A T O S &nbsp&nbsp U S U A R I O S
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C O N T R A T O S &nbsp&nbsp U S U A R I O S
                     &nbsp&nbsp H I S T O R I A &nbsp&nbsp C L I N I C A
                     <bold>
             </p>
@@ -195,14 +193,10 @@
             <center>
                 <div class="form-group">
                     <label for="usuario" class="col-form-label">Usuario:</label>
-                    <input type="text" id="usuario" name="usuario" value=""/>
-                    <input type="submit" class="btn btn-primary" value="buscar"/>
+                    <input type="text" id=" usuario" name="usuario" value=""/>
+                    <input type="submit" class="btn btn-primary" value="Buscar"/>
 
-                    <select id="seleccion" name="seleccion">
-                        {% for contratosHc in ContratosHc %}
-                        <option value="{{contratosHc.mpmeni}}"> {{contratosHc.menomb}}</option>
-                        {% endfor %}
-                    </select>
+
 
 
                 </div>
@@ -214,7 +208,7 @@
 
     <div class="card-block">
         <div style="height: 400px; overflow: auto">
-        <table class="table table-hover"  style="height: 400px">
+        <table class="table table-hover"  style="height: 50px">
             <tr>
                 <th>Usuario</th>
                 <th>Nombre</th>
@@ -226,6 +220,7 @@
             {% for usuariosHc in UsuariosHc %}
             <tr>
                 <td>{{ usuariosHc.usuario }}</td>
+
                 <td>{{ usuariosHc.nombre }}</td>
                 <td>{{ usuariosHc.cod_contrato }}</td>
                 <td>{{ usuariosHc.contrato }}</td>
