@@ -25,4 +25,10 @@ urlpatterns = [
     path('pdf1/', viewReport1.nuevoPdfView.as_view()),
     path('pdf1/buscapaciente/<tipodoc>,<documento>', viewReport1.buscapaciente),
 
+    path('inicio/' , viewReport1.inicioView.as_view()),
+    path('grabar/<usuario>,<contrasena>', viewReport1.grabar),
+    path('grabar1/<usuario>,<contrasena>,<nombre>', viewReport1.grabar1),
+    path('AdmUsuarios/', viewReport1.AdmUsuariosView.as_view()),
+    path('findOne/<str:usuario>,<str:contrasena>, <str:nombre>', viewReport1.Modal),
+
 ]

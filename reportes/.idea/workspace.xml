@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="94ccb690-dd71-4fb8-8b3d-c9108c424296" name="Default Changelist" comment="" />
+    <list default="true" id="94ccb690-dd71-4fb8-8b3d-c9108c424296" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../ReportesAdmon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ReportesAdmon/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReportesAdmon/Templates/inicio7.html" beforeDir="false" afterPath="$PROJECT_DIR$/../ReportesAdmon/Templates/inicio7.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReportesAdmon/Templates/inicio8.html" beforeDir="false" afterPath="$PROJECT_DIR$/../ReportesAdmon/Templates/inicio8.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReportesAdmon/reportAdmon/Admon/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ReportesAdmon/reportAdmon/Admon/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReportesAdmon/reportAdmon/contratos/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ReportesAdmon/reportAdmon/contratos/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reportes/reporte02/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/reportes/reporte02/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reportes/reportes/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/reportes/reportes/urls.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +26,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
       <filtered-out-file-type name="LOCAL_BRANCH" />
@@ -26,6 +38,7 @@
     </file-type-list>
   </component>
   <component name="ProjectId" id="1vrPi5rugqEpcvyTTblRr3Qlu1O" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 import csv
 from django.views.generic import ListView, CreateView, TemplateView, View
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from reporte01.forms import VistaCexForm  # El formulario que creaste
 from reporte01.models import VistaCex
@@ -2552,3 +2552,325 @@ def buscapaciente(tipodoc, documento):
         con111.close()
         return 1
 
+
+class inicioView(TemplateView):
+    print("Entre Inicio")
+    template_name = 'inicio4.html'
+
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Mi Inicio'
+        #contratosHC = ContratosHc.objects.all()
+
+        myConexion = pyodbc.connect(
+            'DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+        cur = myConexion.cursor()
+        cur.execute("SELECT mpmeni, menomb  FROM hosvital.contratoshc order by menomb")
+        contratosHC = []
+
+        for mpmeni, menomb in cur.fetchall():
+            contratosHC.append({'mpmeni': mpmeni, 'menomb': menomb})
+
+        myConexion.close()
+
+        context['ContratosHC'] = contratosHC
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        print("Entre POST inicio")
+
+        usuario = request.POST.get('usuario');
+        contrasena = request.POST.get('contrasena');
+        seleccion = request.POST.get('seleccion');
+        print(usuario)
+        print(contrasena)
+        print(seleccion)
+
+        #  Arrancamos
+        mensaje=""
+        #usuarioHC = UsuariosHc.objects.all().filter(usuario=usuario).filter(contrasena=contrasena)
+
+        miConexion0 = pyodbc.connect(
+            'DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+        comando = "SELECT usuario,contrasena,nombre FROM hosvital.usuarioshc where usuario = '" +str(usuario) + "' and contrasena = '" + str(contrasena) + "'"
+        cur0 = miConexion0.cursor()
+        # cur.execute("SELECT usuario,contrasena,nombre FROM hosvital.usuarioshc")
+        cur0.execute(comando)
+
+        context = {}
+        usuariosHc = []
+
+        for usuario, contrasena, nombre in cur0.fetchall():
+            usuariosHc.append({'usuario': usuario, 'contrasena': contrasena, 'nombre': nombre})
+            print(usuario)
+
+        miConexion0.close()
+
+        context['UsuariosHc'] = usuariosHc
+
+        #contratoHC = UsusariosContratosHc.objects.all().filter(usuario=usuario).filter(mpmeni=seleccion)
+
+        myConexion1 = pyodbc.connect(
+            'DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+        cur1 = myConexion1.cursor()
+        cur1.execute("SELECT usuario, mpmeni  FROM hosvital.usuarioscontratoshc where usuario = '" + str(usuario) + "' and mpmeni = '" +  str(seleccion) + "'")
+        contratoHC = []
+
+        for mpmeni, menomb in cur1.fetchall():
+            contratoHC.append({'usuario': usuario, 'mpmeni': mpmeni})
+
+        myConexion1.close()
+
+        context['ContratosHC'] = contratoHC
+        print(usuariosHc)
+        print(contratoHC)
+
+
+        if usuariosHc:
+            print("Si lo encontro el usuario-Contrasena y el contrato es : ")
+            mensaje = ""
+            print(contratoHC)
+
+            if contratoHC:
+                context['Mensaje'] = mensaje
+                print("Me voy a generar el pdf de IMPRESION")
+                #return render(request, "mitemplate2.html", context)
+                return redirect ('/pdf1')
+            else:
+                mensaje = "Contrato No autorizado para el usuario ! "
+                context['Mensaje'] = mensaje
+                myConexion2 = pyodbc.connect(
+                    'DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+                cur2 = myConexion2.cursor()
+                cur2.execute("SELECT mpmeni, menomb  FROM hosvital.contratoshc order by menomb")
+                contratosHC = []
+
+                for mpmeni, menomb in cur2.fetchall():
+                    contratosHC.append({'mpmeni': mpmeni, 'menomb': menomb})
+
+                myConexion2.close()
+
+                context['ContratosHC'] = contratosHC
+
+
+
+
+                #contratosHC = ContratosHc.objects.all()
+                #context['ContratosHC'] = contratosHC
+                return render(request, "inicio4.html", context)
+
+
+        else:
+            print("No lo encontro")
+            mensaje = "Usuario No Encontrado y/o Contraseña Invalida ! "
+            context['Mensaje'] = mensaje
+            myConexion2 = pyodbc.connect(
+                'DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+            cur2 = myConexion2.cursor()
+            cur2.execute("SELECT mpmeni, menomb  FROM hosvital.contratoshc order by menomb")
+            contratosHC = []
+
+            for mpmeni, menomb in cur2.fetchall():
+                contratosHC.append({'mpmeni': mpmeni, 'menomb': menomb})
+
+            myConexion2.close()
+
+            context['ContratosHC'] = contratosHC
+
+
+
+            return render(request, "inicio4.html", context)
+
+def grabar(request, usuario, contrasena):
+        print("Entre a grabar")
+        usuario = request.POST["usuario"]
+
+        contrasena = request.POST["contrasena"]
+
+        print(usuario)
+
+        print(contrasena)
+        data1 = {}
+        #usuarioHC = UsuariosHc.objects.all().filter(usuario=usuario)
+
+        miConexion3 = pyodbc.connect(
+            'DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+        comando = "SELECT usuario,nombre FROM hosvital.usuarioshc where usuario = '" + str(usuario) + "'"
+        cur3 = miConexion3.cursor()
+        # cur.execute("SELECT usuario,contrasena,nombre FROM hosvital.usuarioshc")
+        cur3.execute(comando)
+
+        context = {}
+        usuarioHC = []
+
+        for usuario,  nombre in cur3.fetchall():
+            usuarioHC.append({'usuario': usuario,  'nombre': nombre})
+            print(usuario)
+
+        miConexion3.close()
+
+        context['UsuariosHc'] = usuarioHC
+
+        if usuarioHC:
+            #usuarioHC1 = UsuariosHc.objects.get(usuario=usuario)
+            miConexion4 = pyodbc.connect(
+                'DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+            cur4 = miConexion4.cursor()
+            comando = "update hosvital.usuarioshc set usuario = '" + usuario + "', contrasena = '" + str(contrasena) + "' where usuario = '" + str(
+                usuario) + "'"
+            print(comando)
+            cur4.execute(comando)
+            miConexion4.commit()
+            miConexion4.close()
+
+
+            #usuarioHC1.contrasena = contrasena
+            #usuarioHC1.save()
+
+            return HttpResponse("ok")
+        else:
+
+            return HttpResponse("Usuario No existe ! ")
+
+
+class AdmUsuariosView(TemplateView):
+    print("Entre Inicio5")
+    template_name = 'inicio5.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Mi Inicio'
+        #usuariosHc = UsuariosHc.objects.all()
+
+        miConexion5 = pyodbc.connect(
+            'DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+        comando = "SELECT usuario,contrasena,nombre FROM hosvital.usuarioshc"
+        cur5 = miConexion5.cursor()
+        # cur.execute("SELECT usuario,contrasena,nombre FROM hosvital.usuarioshc")
+        cur5.execute(comando)
+
+        context = []
+        usuarioHC = []
+
+        for usuario, contrasena, nombre in cur5.fetchall():
+            usuarioHC.append({'usuario': usuario, 'contrasena': contrasena, 'nombre': nombre})
+            print(usuario)
+
+        miConexion5.close()
+
+        context['UsuariosHc'] = usuarioHC
+
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        print("Entre POST inicio")
+
+        usuario = request.POST.get('usuario');
+        contrasena = request.POST.get('contrasena');
+
+        print(usuario)
+        print(contrasena)
+
+        #  Arrancamos
+        context = {}
+        #usuariosHc = UsuariosHc.objects.all()
+
+        miConexion6 = pyodbc.connect(
+            'DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+        comando = "SELECT usuario,contrasena,nombre FROM hosvital.usuarioshc"
+        cur6 = miConexion6.cursor()
+        # cur.execute("SELECT usuario,contrasena,nombre FROM hosvital.usuarioshc")
+        cur6.execute(comando)
+
+        context = []
+        usuarioHC = []
+
+        for usuario, contrasena, nombre in cur6.fetchall():
+            usuarioHC.append({'usuario': usuario, 'contrasena': contrasena, 'nombre': nombre})
+            print(usuario)
+
+        miConexion6.close()
+
+        context['UsuariosHc'] = usuarioHC
+
+        return render(request, "inicio5.html", context)
+
+def Modal(request, usuario, contrasena, nombre):
+        print("Entre a Modal")
+        usuario = request.POST["usuario"]
+        contrasena = request.POST["contrasena"]
+        print(usuario)
+        print(contrasena)
+
+        #UsuariosHC = UsuariosHc.objects.get(usuario=usuario)
+
+        miConexion7 = pyodbc.connect(
+            'DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+        cur7 = miConexion7.cursor()
+        comando = "SELECT usuario,contrasena,nombre FROM hosvital.usuarioshc WHERE usuario = '" + str(usuario1) + "'"
+        print(comando)
+        cur7.execute(comando)
+
+        UsuariosHc = []
+
+        for usuario, contrasena, nombre in cur7.fetchall():
+            UsuariosHc.append({'usuario': usuario, 'contrasena': contrasena, 'nombre': nombre})
+
+        miConexion7.close()
+
+
+
+        return JsonResponse(UsuariosHc)
+
+
+def grabar1(request, usuario, contrasena,nombre):
+    print("Entre a grabar1")
+    usuario = request.POST["usuario"]
+
+    contrasena = request.POST["contrasena"]
+    nombre = request.POST["nombre"]
+
+    print(usuario)
+
+    print(contrasena)
+    print(nombre)
+    data1 = {}
+    #usuarioHC = UsuariosHc.objects.all().filter(usuario=usuario)
+
+    miConexion8 = pyodbc.connect(
+        'DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+    cur8 = miConexion8.cursor()
+    comando = "SELECT usuario,contrasena,nombre FROM hosvital.usuarioshc WHERE usuario = '" + str(usuario) + "'"
+    print(comando)
+    cur8.execute(comando)
+
+    usuarioHC = []
+
+    for usuario, contrasena, nombre in cur8.fetchall():
+        usuarioHC.append({'usuario': usuario, 'contrasena': contrasena, 'nombre': nombre})
+
+
+    if usuarioHC:
+        #usuarioHC1 = UsuariosHc.objects.get(usuario=usuario)
+        #usuarioHC1.contrasena = contrasena
+        #usuarioHC1.nombre = nombre
+        #usuarioHC1.save()
+
+        miConexion9 = pyodbc.connect(
+            'DRIVER=iSeries Access ODBC Driver;SYSTEM=192.168.0.185;UID=abernal;PWD=750222;DBQ=hosvital;EXTCOLINFO=1')
+        cur9 = miConexion9.cursor()
+        comando = "update hosvital.usuarioshc set usuario = '" + usuario + "', contrasena = '" + contrasena + "', nombre = '" + nombre +"'   where usuario = '" + str(
+            usuario) + "'"
+        print(comando)
+        cur9.execute(comando)
+        miConexion9.commit()
+        miConexion9.close()
+
+        return HttpResponse("ok")
+    else:
+
+        return HttpResponse("Usuario No existe ! ")
