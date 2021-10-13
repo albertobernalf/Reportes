@@ -172,3 +172,7 @@ def borrarUsuario(request, usuario):
 
 def adicionarUsuario(request):
     print("Entre Adicicionar")
+
+
+def pruebasGit(request):
+    print("hola")
